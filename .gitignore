@@ -1,0 +1,11 @@
+# intellij
+*.iml
+*.ipr
+*.iws
+.idea/
+
+#maven
+/target
+
+#Project
+model.*

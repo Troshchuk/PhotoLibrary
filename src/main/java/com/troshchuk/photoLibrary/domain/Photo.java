@@ -3,6 +3,7 @@ package com.troshchuk.photoLibrary.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * @author Dmytro Troshchuk
@@ -10,6 +11,7 @@ import javax.persistence.Id;
  */
 
 @Entity
+@Table(name = "Photos")
 public class Photo {
     @Id
     @Column(name = "photo_id")

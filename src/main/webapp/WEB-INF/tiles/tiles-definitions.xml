@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+    <definition name="template" template="/WEB-INF/template/template.jsp">
+        <put-attribute name="header" value="/WEB-INF/template/header.jsp"/>
+        <put-attribute name="topmenu" value="/WEB-INF/template/topmenu.jsp"/>
+    </definition>
+
+    <definition name="home" extends="template" >
+        <put-attribute name="content" value="/WEB-INF/pages/home.jsp" />
+    </definition>
+</tiles-definitions>

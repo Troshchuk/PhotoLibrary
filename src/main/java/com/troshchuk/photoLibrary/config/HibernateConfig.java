@@ -10,10 +10,12 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+import org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean;
 import org.springframework.orm.hibernate4.HibernateTransactionManager;
 import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
 import java.util.Properties;
 
@@ -37,19 +39,19 @@ public class HibernateConfig {
     }
 
     @Bean
-    public SessionFactory sessionFactory() {
-        final LocalSessionFactoryBean sessionFactory =
+    public LocalSessionFactoryBean sessionFactory() {
+        LocalSessionFactoryBean sessionFactory =
                 new LocalSessionFactoryBean();
 
         sessionFactory.setDataSource(restDataSource());
         sessionFactory.setPackagesToScan("com.troshchuk.photoLibrary.domain");
-        sessionFactory.setHibernateProperties(hibernateProperties());sessionFactory.getConfiguration();
-        return sessionFactory.getObject();
+        sessionFactory.setHibernateProperties(hibernateProperties());
+        return sessionFactory;
     }
 
     @Bean
     public DataSource restDataSource() {
-        final DriverManagerDataSource dataSource =
+        DriverManagerDataSource dataSource =
                 new DriverManagerDataSource();
         dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));
         dataSource.setUrl(env.getProperty("jdbc.url"));
@@ -62,8 +64,8 @@ public class HibernateConfig {
     @Bean
     @Autowired
     public HibernateTransactionManager transactionManager(
-            final SessionFactory sessionFactory) {
-        final HibernateTransactionManager txManager =
+            SessionFactory sessionFactory) {
+        HibernateTransactionManager txManager =
                 new HibernateTransactionManager();
         txManager.setSessionFactory(sessionFactory);
 
@@ -75,11 +77,9 @@ public class HibernateConfig {
         return new PersistenceExceptionTranslationPostProcessor();
     }
 
-    final Properties hibernateProperties() {
-        final Properties hibernateProperties = new Properties();
-        hibernateProperties.setProperty("hibernate.hbm2ddl.auto",
-                                        env.getProperty(
-                                                "hibernate.hbm2ddl.auto"));
+    Properties hibernateProperties() {
+        Properties hibernateProperties = new Properties();
+
         hibernateProperties.setProperty("hibernate.dialect",
                                         env.getProperty("hibernate.dialect"));
 

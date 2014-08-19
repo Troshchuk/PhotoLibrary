@@ -1,9 +1,6 @@
 package com.troshchuk.photoLibrary.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -12,6 +9,7 @@ import java.sql.Timestamp;
  */
 
 @Entity
+@Table(name = "Users")
 public class User {
     @Id
     @Column(name = "user_id")
@@ -22,6 +20,7 @@ public class User {
     @Column(name = "last_seen")
     private Timestamp  lastSeen;
 
+    @OneToOne
     @JoinColumn(name = "user_id")
     private Password password;
 

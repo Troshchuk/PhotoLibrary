@@ -3,6 +3,7 @@ package com.troshchuk.photoLibrary.domain;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 /**
  * @author Dmytro Troshchuk
@@ -10,12 +11,16 @@ import javax.persistence.Id;
  */
 
 @Entity
+@Table(name = "Passwords")
 public class Password {
     @Id
     @Column(name = "user_id")
     private long userId;
 
     private String password;
+
+    public Password() {
+    }
 
     public Password(User user, String password) {
         userId = user.getUserId();

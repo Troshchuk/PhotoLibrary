@@ -14,7 +14,7 @@ public class GenericRepositoryHibernateImpl<T, PK extends Serializable>
         implements GenericRepository<T, PK> {
     private Class<T> type;
 
-    @Autowired
+//    @Autowired
     private SessionFactory sessionFactory;
 
     @Override

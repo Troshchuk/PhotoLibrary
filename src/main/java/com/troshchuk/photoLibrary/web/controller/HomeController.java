@@ -1,15 +1,12 @@
 package com.troshchuk.photoLibrary.web.controller;
 
-import org.apache.tiles.TilesContainer;
-import org.apache.tiles.access.TilesAccess;
+import com.troshchuk.photoLibrary.domain.User;
+import com.troshchuk.photoLibrary.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.text.DateFormat;
-import java.util.Date;
-import java.util.Locale;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * @author Dmytro Troshchuk
@@ -18,9 +15,30 @@ import java.util.Locale;
 @Controller
 public class HomeController {
 
-    @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
-    public String home() {
+    @Autowired
+    private UserService userService;
 
+    @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
+    public String homePage() {
         return "home";
     }
+
+    @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
+    public String loginPage() {
+        return "login";
+    }
+
+    @RequestMapping(value = {"/registration"}, method = RequestMethod.POST)
+    public String register(@RequestParam String email, @RequestParam String password) {
+        User user = new User(email.toLowerCase());
+        userService.create(user, password);
+        return "login";
+    }
+
+    @RequestMapping(value = {"/registration"}, method = RequestMethod.GET)
+    public String registrationPage() {
+        return "registration";
+    }
+
+
 }

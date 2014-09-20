@@ -8,4 +8,6 @@ import com.troshchuk.photoLibrary.repository.common.Operations;
  * @version 1.00  19.08.14.
  */
 public interface UserService extends Operations<User, Long> {
+    public Long create(User user, String password);
+    public User read(String email, String password);
 }

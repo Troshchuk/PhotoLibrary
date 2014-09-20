@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.annotation.PostConstruct;
 import javax.sql.DataSource;
+import java.sql.SQLException;
 import java.util.Properties;
 
 /**
@@ -28,7 +29,9 @@ import java.util.Properties;
 @EnableTransactionManagement
 @PropertySource({"classpath:mysql.properties"})
 @ComponentScan({"com.troshchuk.photoLibrary.domain",
-                "com.troshchuk.photoLibrary.repository"})
+                "com.troshchuk.photoLibrary.repository",
+                "com.troshchuk.photoLibrary.service",
+                "com.troshchuk.photoLibrary.web.rest"})
 public class HibernateConfig {
 
     @Autowired
@@ -51,6 +54,7 @@ public class HibernateConfig {
 
     @Bean
     public DataSource restDataSource() {
+
         DriverManagerDataSource dataSource =
                 new DriverManagerDataSource();
         dataSource.setDriverClassName(env.getProperty("jdbc.driverClassName"));

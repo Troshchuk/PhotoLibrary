@@ -4,11 +4,19 @@
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 <tiles-definitions>
     <definition name="template" template="/WEB-INF/template/template.jsp">
-        <put-attribute name="header" value="/WEB-INF/template/header.jsp"/>
+        <put-attribute name="head" value="/WEB-INF/template/head.jsp"/>
         <put-attribute name="topmenu" value="/WEB-INF/template/topmenu.jsp"/>
     </definition>
 
     <definition name="home" extends="template" >
-        <put-attribute name="content" value="/WEB-INF/pages/home.jsp" />
+        <put-attribute name="content" value="/WEB-INF/pages/login.jsp" />
+    </definition>
+
+    <definition name="registration" extends="template" >
+        <put-attribute name="content" value="/WEB-INF/pages/registration.jsp"/>
+    </definition>
+
+    <definition name="login" extends="template" >
+        <put-attribute name="content" value="/WEB-INF/pages/login.jsp" />
     </definition>
 </tiles-definitions>

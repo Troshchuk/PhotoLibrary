@@ -12,6 +12,7 @@ import java.sql.Timestamp;
 @Table(name = "Users")
 public class User {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     private long userId;
 
@@ -20,14 +21,10 @@ public class User {
     @Column(name = "last_seen")
     private Timestamp  lastSeen;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private Password password;
-
     public User() {
     }
 
-    public User(String email, Timestamp lastSeen) {
+    public User(String email) {
         this.email = email;
         this.lastSeen = lastSeen;
     }

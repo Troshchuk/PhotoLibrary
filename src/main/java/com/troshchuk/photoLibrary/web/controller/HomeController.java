@@ -1,12 +1,17 @@
 package com.troshchuk.photoLibrary.web.controller;
 
 import com.troshchuk.photoLibrary.domain.User;
+import com.troshchuk.photoLibrary.security.CaptchaContainer;
 import com.troshchuk.photoLibrary.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
 
 /**
  * @author Dmytro Troshchuk
@@ -14,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @Controller
 public class HomeController {
+    @Autowired
+    private CaptchaContainer captchaContainer;
 
     @Autowired
     private UserService userService;
@@ -24,8 +31,11 @@ public class HomeController {
     }
 
     @RequestMapping(value = {"/login"}, method = RequestMethod.GET)
-    public String loginPage() {
-        return "login";
+    public ModelAndView loginPage(HttpServletRequest request) {
+        HashMap<String, String> model = new HashMap<String, String>();
+        model.put("answer", captchaContainer.getCaptcha(request.getRequestedSessionId()));
+        model.put("random", String.valueOf((int) Math.floor(Math.random() * 100) + 100));
+        return new ModelAndView("login", model);
     }
 
     @RequestMapping(value = {"/registration"}, method = RequestMethod.POST)
@@ -40,5 +50,8 @@ public class HomeController {
         return "registration";
     }
 
-
+    @RequestMapping(value = {"/admin"}, method = RequestMethod.GET)
+    public String adminPage() {
+        return "admin";
+    }
 }

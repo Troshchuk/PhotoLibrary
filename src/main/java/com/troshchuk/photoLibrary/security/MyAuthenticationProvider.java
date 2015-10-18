@@ -1,5 +1,6 @@
 package com.troshchuk.photoLibrary.security;
 
+import com.troshchuk.photoLibrary.domain.Role;
 import com.troshchuk.photoLibrary.domain.User;
 import com.troshchuk.photoLibrary.service.UserService;
 import com.troshchuk.photoLibrary.service.impl.UserServiceImpl;
@@ -35,11 +36,11 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
         User user = userService.read(email, password);
 
         if (user != null) {
-            GrantedAuthority grantedAuthority = new GrantedAuthorityImpl("USER");
-
             Set<GrantedAuthority> grantedAuthorities = new HashSet<GrantedAuthority>();
-
-            grantedAuthorities.add(grantedAuthority);
+            for (Role role : user.getRoles()) {
+                GrantedAuthority grantedAuthority = new GrantedAuthorityImpl(role.getRole());
+                grantedAuthorities.add(grantedAuthority);
+            }
 
             return new UsernamePasswordAuthenticationToken(email, password, grantedAuthorities);
         }

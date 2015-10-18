@@ -2,6 +2,7 @@ package com.troshchuk.photoLibrary.domain;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.Set;
 
 /**
  * @author Dmytro Troshchuk
@@ -18,6 +19,13 @@ public class User {
 
     private String email;
 
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "Users_Roles", joinColumns = {
+            @JoinColumn(name = "user_id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "role_id",
+                    nullable = false, updatable = false)})
+    private Set<Role> roles;
+
     @Column(name = "last_seen")
     private Timestamp  lastSeen;
 
@@ -26,7 +34,6 @@ public class User {
 
     public User(String email) {
         this.email = email;
-        this.lastSeen = lastSeen;
     }
 
     public long getUserId() {
@@ -51,5 +58,13 @@ public class User {
 
     public void setLastSeen(Timestamp lastSeen) {
         this.lastSeen = lastSeen;
+    }
+
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
     }
 }

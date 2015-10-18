@@ -106,7 +106,6 @@
                 <configuration>
                     <path>/</path>
                     <contextReloadable>true</contextReloadable>
-
                 </configuration>
             </plugin>
 

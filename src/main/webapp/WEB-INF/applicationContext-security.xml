@@ -24,7 +24,8 @@
         <intercept-url pattern="/news/**" access="hasRole('USER')" />
         <intercept-url pattern="/home" access="hasRole('USER')" />
         <intercept-url pattern="/admin" access="hasRole('ADMIN')" />
-        <intercept-url pattern="/" access="hasRole('User')"/>
+        <intercept-url pattern="/" access="hasRole('USER')"/>
+
 
         <form-login login-page="/login"
                     default-target-url="/home"

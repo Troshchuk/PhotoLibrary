@@ -30,7 +30,6 @@ public class UserServiceImpl extends AbstractService<User, Long> implements User
         return id;
     }
 
-    @Override
     public User read(String email, String password) {
         User user = repository.readByEmail(email);
 

@@ -1,6 +1,8 @@
 package com.troshchuk.photoLibrary.web.filter;
 
 import com.troshchuk.photoLibrary.security.CaptchaContainer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
@@ -15,8 +17,6 @@ import java.io.IOException;
 /**
  * Filter for verifying if the submitted Captcha fields
  * are valid.
- * <p>
- * This filter also allows you to set a proxy if needed
  */
 public class CaptchaVerifierFilter extends OncePerRequestFilter {
     private String failureUrl;
@@ -25,9 +25,9 @@ public class CaptchaVerifierFilter extends OncePerRequestFilter {
     @Autowired
     private CaptchaContainer captchaContainer;
 
-    // Inspired by log output: AbstractAuthenticationProcessingFilter.java:unsuccessfulAuthentication:320)
-    // Delegating to authentication failure handlerorg.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler@15d4273
     private SimpleUrlAuthenticationFailureHandler failureHandler = new SimpleUrlAuthenticationFailureHandler();
+
+    private static final Logger LOGGER = LogManager.getLogger(CaptchaVerifierFilter.class.getName());
 
     @Override
     public void doFilterInternal(HttpServletRequest req, HttpServletResponse res,
@@ -38,7 +38,7 @@ public class CaptchaVerifierFilter extends OncePerRequestFilter {
             } else {
                 failureHandler.setDefaultFailureUrl(failureUrl);
                 failureHandler.onAuthenticationFailure(req, res, new BadCredentialsException("Captcha invalid!"));
-
+                LOGGER.info("Captcha is invalid");
             }
         } else {
             chain.doFilter(req, res);

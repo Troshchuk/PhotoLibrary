@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 public class CaptchaCaptureFilter extends OncePerRequestFilter {
     @Autowired
-    CaptchaContainer captchaContainer;
+    private CaptchaContainer captchaContainer;
 
 	@Override
 	public void doFilterInternal(HttpServletRequest req, HttpServletResponse res,

@@ -3,6 +3,8 @@ package com.troshchuk.photoLibrary.web.controller;
 import com.troshchuk.photoLibrary.domain.User;
 import com.troshchuk.photoLibrary.security.CaptchaContainer;
 import com.troshchuk.photoLibrary.service.UserService;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.HashMap;
 
 /**
@@ -19,6 +22,8 @@ import java.util.HashMap;
  */
 @Controller
 public class HomeController {
+    private static final Logger LOGGER = LogManager.getLogger(HomeController.class.getName());
+
     @Autowired
     private CaptchaContainer captchaContainer;
 
@@ -27,6 +32,7 @@ public class HomeController {
 
     @RequestMapping(value = {"/", "/home"}, method = RequestMethod.GET)
     public String homePage() {
+        LOGGER.info("Open home page");
         return "home";
     }
 
@@ -52,6 +58,15 @@ public class HomeController {
 
     @RequestMapping(value = {"/admin"}, method = RequestMethod.GET)
     public String adminPage() {
+        LOGGER.info("Open admin page");
         return "admin";
     }
+
+    @RequestMapping(value = "/403", method = RequestMethod.GET)
+    public String accesssDenied() {
+        LOGGER.info("Try open page which user don't have permission!");
+        return "403";
+
+    }
+
 }

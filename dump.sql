@@ -17,8 +17,13 @@ USE `PhotoLibrary` ;
 CREATE TABLE IF NOT EXISTS `PhotoLibrary`.`Users` (
   `user_id` INT NOT NULL AUTO_INCREMENT,
   `email` VARCHAR(45) NOT NULL,
-  `last_seen` DATETIME NULL,
-  PRIMARY KEY (`user_id`))
+  `role_id` INT,
+  PRIMARY KEY (`user_id`),
+  CONSTRAINT `fk_Users_1`
+    FOREIGN KEY (`role_id`)
+    REFERENCES `PhotoLibrary`.`Roles` (`role_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
@@ -45,6 +50,15 @@ CREATE TABLE IF NOT EXISTS `PhotoLibrary`.`Photos` (
   `name` VARCHAR(45) NOT NULL,
   `source` VARCHAR(250) NOT NULL,
   PRIMARY KEY (`photo_id`))
+ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Table `PhotoLibrary`.`Roles`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PhotoLibrary`.`Roles` (
+  `role_id` INT NOT NULL AUTO_INCREMENT,
+  `role` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`role_id`))
 ENGINE = InnoDB;
 
 

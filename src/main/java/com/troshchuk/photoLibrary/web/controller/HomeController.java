@@ -44,6 +44,14 @@ public class HomeController {
         return new ModelAndView("login", model);
     }
 
+    @RequestMapping(value = {"/captcha"}, method = RequestMethod.GET)
+    public ModelAndView captchaPage(HttpServletRequest request) {
+        HashMap<String, String> model = new HashMap<String, String>();
+        model.put("answer", captchaContainer.getCaptcha(request.getRequestedSessionId()));
+        model.put("random", String.valueOf((int) Math.floor(Math.random() * 100) + 100));
+        return new ModelAndView("captcha", model);
+    }
+
     @RequestMapping(value = {"/registration"}, method = RequestMethod.POST)
     public String register(@RequestParam String email, @RequestParam String password) {
         User user = new User(email.toLowerCase());
@@ -69,4 +77,10 @@ public class HomeController {
 
     }
 
+    @RequestMapping(value = "/verify_captcha", method = RequestMethod.POST)
+    public String verifyCaptcha(HttpServletRequest request) {
+        LOGGER.info("Verify captcha");
+        return "redirect:home";
+
+    }
 }

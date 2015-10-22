@@ -40,6 +40,13 @@ public class CaptchaVerifierFilter extends OncePerRequestFilter {
                 failureHandler.onAuthenticationFailure(req, res, new BadCredentialsException("Captcha invalid!"));
                 LOGGER.info("Captcha is invalid");
             }
+        } else if ("/verify_captcha".equals(req.getRequestURI())) {
+            if (captchaContainer.validate(req.getRequestedSessionId(), req.getParameter("captcha"))) {
+                chain.doFilter(req, res);
+            } else {
+                chain.doFilter(req, res);
+                LOGGER.info("Captcha is invalid");
+            }
         } else {
             chain.doFilter(req, res);
         }

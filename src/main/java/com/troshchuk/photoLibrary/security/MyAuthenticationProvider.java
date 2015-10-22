@@ -28,7 +28,6 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
     @Autowired
     public UserService userService;
 
-    @Override
     public Authentication authenticate(Authentication authentication)
     throws AuthenticationException {
         String email = authentication.getName();
@@ -49,7 +48,6 @@ public class MyAuthenticationProvider implements AuthenticationProvider {
         return null;
     }
 
-    @Override
     public boolean supports(Class<?> aClass) {
         return aClass.equals(UsernamePasswordAuthenticationToken.class);
     }

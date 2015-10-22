@@ -18,9 +18,11 @@ public class LoggingFilter implements Filter {
 
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String username = auth.getName();
-        ThreadContext.put("UserName", username);
-        ThreadContext.put("ip", servletRequest.getRemoteAddr());
+        if (auth != null) {
+            String username = auth.getName();
+            ThreadContext.put("UserName", username);
+            ThreadContext.put("ip", servletRequest.getRemoteAddr());
+        }
         filterChain.doFilter(servletRequest, servletResponse);
     }
 
